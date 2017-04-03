@@ -1,0 +1,2 @@
+# magicScript
+The Magic Script
