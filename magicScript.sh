@@ -35,6 +35,11 @@ cd $BASEDIR
 
 
 TMPDIR=/root/magicScriptTmp
+WORKBOOKDIR=/root/
+
+WORKBOOK_GIT=https://github.com/pentaho/pentaho-bigdatavm.git
+WORKBOOK_DIRNAME=pentaho-bigdata.vm
+WORKBOOK_VERSION=master
 
 
 # Do we have a temp dir? Wipe it out!
@@ -51,7 +56,7 @@ echo -e '\n\nStep 1: Installing a few extra packages to the operating system...'
 
 # Install some stuff we need
 apt-get update > $TMPDIR/step1.log 2>&1 && apt-get install -y \
-	evince medit wget unzip >> $TMPDIR/step1.log 2>&1
+	evince medit wget unzip git >> $TMPDIR/step1.log 2>&1
 
 
 echo -e '\n\nStep 2: Downloading SQuirreL. This may take a few minutes...'
@@ -70,3 +75,25 @@ chmod +x /opt/squirrelsql-3.7.1-standard/*sh
 
 
 
+echo -e '\n\nStep 4: Getting the workbook content the workbook content...'
+
+# Cloning or  updating the version rep
+
+# Do we have a temp dir? Wipe it out!
+
+if [ -d $WORKBOOKDIR/$WORKBOOK_DIRNAME ]; then
+
+	cd $WORKBOOKDIR/$WORKBOOK_DIRNAME 
+	git checkout $WORKBOOK_VERSION >> $TMPDIR/step4.log 2>&1
+	git pull >> $TMPDIR/step4.log 2>&1
+
+else
+	
+	cd $WORKBOOKDIR
+	git clone -b $WORKBOOK_VERSION https://github.com/pentaho/pentaho-bigdatavm.git >> $TMPDIR/step4.log 2>&1 
+fi
+
+
+# Done
+
+echo -e '\n\nDone! Enjoy!\n'
