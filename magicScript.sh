@@ -73,6 +73,15 @@ echo -e '\n\nStep 3: Installing and configuring SQuirreL...'
 unzip -o $TMPDIR/squirrelsql-3.7.1-standard.zip -d /opt >> $TMPDIR/step3.log 2>&1
 chmod +x /opt/squirrelsql-3.7.1-standard/*sh
 
+cat << 'EOF' > /root/Desktop/SQuirreL.desktop
+[Desktop Entry]
+Name=SQuirreL
+Type=Application
+Exec=/opt/squirrelsql-3.7.1-standard/squirrel-sql.sh
+Icon=/opt/squirrelsql-3.7.1-standard/icons/acorn.png
+EOF
+
+chmod +x /root/Desktop/SQuirreL.desktop
 
 
 echo -e '\n\nStep 4: Getting the workbook content the workbook content...'
@@ -93,6 +102,7 @@ else
 	git clone -b $WORKBOOK_VERSION https://github.com/pentaho/pentaho-bigdatavm.git >> $TMPDIR/step4.log 2>&1 
 fi
 
+ln -s /root/pentaho-bigdatavm/content/evaluation /root/Desktop/Pentaho\ Evaluation
 
 # Done
 
